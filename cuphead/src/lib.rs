@@ -16,7 +16,7 @@ use asr::timer::{
 };
 use asr::{future::next_tick, print_message, Process};
 use helpers::error::SimpleError;
-use helpers::pointer::{Invalidatable, Readable2, UnityImage};
+use helpers::watchers::unity::UnityImage;
 use std::error::Error;
 
 asr::async_main!(stable);
@@ -282,21 +282,19 @@ async fn tick<'a>(
             )
         };
 
-        if measured_state.was_on_scorecard
-            && memory.done_loading.changed()?
-            && memory.is_loading()?
-        {
-            measured_state.was_on_scorecard = false;
-        }
-
         if should_split {
             split();
         }
 
         if scene == SCENE_TITLE_SCREEN && settings.auto_reset
-            || settings.individual_level_mode && level_is_resetting {
+            || settings.individual_level_mode && level_is_resetting
+        {
             reset();
         }
+    }
+
+    if measured_state.was_on_scorecard && memory.done_loading.changed()? && memory.is_loading()? {
+        measured_state.was_on_scorecard = false;
     }
 
     Ok(())
