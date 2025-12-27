@@ -39,11 +39,13 @@ impl LevelCompleteSetting {
             LevelCompleteSetting::AfterScorecard => {
                 level == Levels::Devil
                     || level == Levels::Saltbaker
+                    || level == Levels::Graveyard
                     || level == Levels::Mausoleum
                     || level.get_type() == LevelType::ChessPiece
             }
             LevelCompleteSetting::AfterScorecardIncludingSaltbaker => {
                 level == Levels::Devil
+                    || level == Levels::Graveyard
                     || level == Levels::Mausoleum
                     || level.get_type() == LevelType::ChessPiece
             }
@@ -90,6 +92,12 @@ pub struct Settings {
     /// Split on boss + run'n'gun completions
     #[default = true]
     pub split_boss_completion: bool,
+
+    /// Split on taking the Devil's deal (for Bad Ending)
+    ///
+    /// You can generally leave this on, since it won't have any affect if you don't take the deal.
+    #[default = true]
+    pub split_devil_deal: bool,
 
     /// Split on King Dice contract cutscene (for Simple runs)
     ///
