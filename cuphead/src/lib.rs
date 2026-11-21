@@ -37,6 +37,7 @@ const SCENE_CUTSCENE_INTRO: &str = "scene_cutscene_intro";
 const SCENE_CUTSCENE_KING_DICE_CONTRACT: &str = "scene_cutscene_kingdice";
 const SCENE_CUTSCENE_DEVIL: &str = "scene_cutscene_devil";
 const SCENE_TITLE_SCREEN: &str = "scene_title";
+const SCENE_SLOT_SELECT: &str = "scene_slot_select";
 const SCENE_SCOREBOARD: &str = "scene_win";
 
 const STAR_SKIP_TIME_FIRST: Duration = Duration::from_millis(100);
@@ -435,7 +436,7 @@ async fn tick<'a>(
             split();
         }
 
-        if scene == SCENE_TITLE_SCREEN && settings.auto_reset
+        if (scene == SCENE_TITLE_SCREEN || scene == SCENE_SLOT_SELECT) && settings.auto_reset
             || settings.individual_level_mode && level_is_resetting
         {
             reset();
